@@ -292,6 +292,10 @@
     font-size: 12px;
     color: #666;
   }
+
+  hr.solid {
+  border-top: 2px solid #4285f4;
+  }
   
   ul.errorlist {
     color: #d32f2f;
@@ -317,7 +321,7 @@
   }
   
   input[type="submit"]:hover {
-    background-color: #3367d6;
+    background-color: #0d3a83;
   }
 
   /* Django checkbox alignment fix */
@@ -332,7 +336,7 @@
     align-items: center;
   }
     .navbar {
-            background-color: #4285f4; /* Royal blue background */
+            background-color: #0d3a83; /* Royal blue background */
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -368,7 +372,7 @@
         }
         
         .nav-links a:hover {
-            background-color: #003380; /* Darker blue on hover */
+            background-color: #4285f4; /* Darker blue on hover */
         }
         
         .nav-links a.active {
@@ -397,12 +401,11 @@
 <body>
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="logo">RailBooker</a>
+            <a href="#" class="logo">RailBooker/admin</a>
             <div class="nav-links">
                 <a href="/train/passengers">Check Passengers</a>
-                <a href="/train/schedule">Train Schedule</a>
                 <a href="/train/TotalRefund">Total Refund</a>
-                <a href="/train/stats">Stats</a>
+                <a href="/train/stats" style="background-color: #4285f4;">Stats</a>
             </div>
         </div>
     </nav>
@@ -427,22 +430,24 @@
         
         {% if revenue %}
             <h2>Total_Revenue</h2>
-            <p>Total_Revenue from {{revenue.From_Date}} to {{revenue.To_Date}} = {{revenue.Total_Revenue}}</p>
+            <p>Total_Revenue from {{revenue.From_Date}} to {{revenue.To_Date}} is <br> &#8377 <u>{{revenue.Total_Revenue}}</u></p>
+              
         {% endif %}
     
         
         {% if details %}
-        <p> </p>
+        <hr class="solid">
         <h2>Busiest Route</h2>
         <p>Train_No - {{details.busy.Train_No}}</p>
         <p>Train_Name - {{details.busy.Train_Name}}</p>
         <p>From - {{details.busy.From_Station}}</p>
         <p>To - {{details.busy.To_Station}}</p>
         <p> </p>
-
-        <h2>Refund Status list list</h2>
+        <br>
+        <hr class="solid">
+        <h2>Refund Status List</h2>
         <div class="passenger-list">
-            <table>
+            <table border="black">
                 <thead>
                     <tr>
                         <th>PNR Number</th>

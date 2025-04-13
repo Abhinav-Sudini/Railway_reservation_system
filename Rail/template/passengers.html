@@ -315,6 +315,9 @@
     width: auto;
     transition: background-color 0.3s;
   }
+  hr.solid {
+  border-top: 2px solid #4285f4;
+  }
   
   input[type="submit"]:hover {
     background-color: #3367d6;
@@ -332,7 +335,7 @@
     align-items: center;
   }
     .navbar {
-            background-color: #4285f4; /* Royal blue background */
+            background-color: #0d3a83; /* Royal blue background */
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -368,7 +371,7 @@
         }
         
         .nav-links a:hover {
-            background-color: #003380; /* Darker blue on hover */
+            background-color: #4285f4; /* Darker blue on hover */
         }
         
         .nav-links a.active {
@@ -397,10 +400,9 @@
 <body>
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="logo">RailBooker</a>
+            <a href="#" class="logo">RailBooker/admin</a>
             <div class="nav-links">
-              <a href="/train/passengers">Check Passengers</a>
-              <a href="/train/schedule">Train Schedule</a>
+              <a href="/train/passengers" style="background-color: #4285f4;">Check Passengers</a>
               <a href="/train/TotalRefund">Total Refund</a>
               <a href="/train/stats">Stats</a>
           </div>
@@ -427,11 +429,12 @@
         
     
         {% if details %}
+        <h2>Passengers List</h2>
         <div class="passenger-list">
-            <table>
+            <table border="black">
                 <thead>
                     <tr>
-                        <th>PNR Number</th>
+                        <th>PNR</th>
                         <th>Name</th>
                         <th>Seat No.</th>
                         <th>Status</th>
@@ -453,13 +456,14 @@
             </table>
         </div>
         {% endif %}
-        <h2>Passengers in Waiting list</h2>
+        <hr class="solid">
+        <h2>Waiting List</h2>
         {% if wl %}
         <div class="passenger-list">
-            <table>
+            <table border="black">
                 <thead>
                     <tr>
-                        <th>PNR Number</th>
+                        <th>PNR</th>
                         <th>Name</th>
                         <th>Seat No.</th>
                         <th>Status</th>
