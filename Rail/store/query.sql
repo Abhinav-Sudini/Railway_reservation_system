@@ -167,6 +167,7 @@ END $$
 
 DELIMITER ;
 
+
 DELIMITER $$
 CREATE PROCEDURE Revenue_over_time(IN from_date DATE,IN to_date DATE)
 BEGIN
@@ -178,5 +179,25 @@ END $$
 DELIMITER ;
 
 
+DELIMITER $$
+CREATE PROCEDURE busy_routes()
+BEGIN
+DECLARE route INT;
+SELECT Route_id INTO route FROM rail_seats WHERE Available=0 GROUP BY Route_id ORDER BY COUNT(*) DESC LIMIT 1;
+
+SELECT 
+r.Train_id as Train_No,
+tr.Train_name as Train_Name,
+st1.Station_name as From_Station,
+r.Start_time as Start_Time,
+st2.Station_name as To_Station,
+r.ENd_time as End_Time,
+JOIN rail_trains tr ON r.Train_id=tr.Train_id,
+JOIN rail_stations st1 ON r.Start_station_id=st1.id,
+JOIN rail_stations st2 ON r.End_station_id=st2.id,
+WHERE r.Route_id=route;
+
+END $$
+DELIMITER;
 
 

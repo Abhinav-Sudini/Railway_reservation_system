@@ -332,7 +332,7 @@
     align-items: center;
   }
     .navbar {
-            background-color: #4285f4; /* Royal blue background */
+            background-color: #0d3a83; /* Royal blue background */
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -368,7 +368,7 @@
         }
         
         .nav-links a:hover {
-            background-color: #003380; /* Darker blue on hover */
+            background-color: #4285f4; /* Darker blue on hover */
         }
         
         .nav-links a.active {
@@ -397,11 +397,10 @@
 <body>
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="logo">RailBooker</a>
+            <a href="#" class="logo">RailBooker/admin</a>
             <div class="nav-links">
               <a href="/train/passengers">Check Passengers</a>
-              <a href="/train/schedule">Train Schedule</a>
-              <a href="/train/TotalRefund">Total Refund</a>
+              <a href="/train/TotalRefund" style="background-color: #4285f4;">Total Refund</a>
               <a href="/train/stats">Stats</a>
           </div>
         </div>
@@ -426,7 +425,7 @@
             </form>
         
         {% if details %}
-        <h2>Total Refund = {{details.Total_Refund}}</h2>
+        <h2>Total Refund = &#8377 {{details.Total_Refund}}</h2>
         {% endif %}
       </div>
     </div>
