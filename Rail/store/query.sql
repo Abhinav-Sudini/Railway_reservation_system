@@ -3,6 +3,7 @@ CREATE PROCEDURE route_lookup(IN from_input VARCHAR(45),
 IN to_input  VARCHAR(45),
 in inp_date DATE)
 BEGIN
+
     SELECT * FROM dbms.rail_routes where 
     Start_station_id IN 
         (SELECT id FROM dbms.rail_stations where District LIKE CONCAT(from_input, '%')) 
@@ -10,9 +11,10 @@ BEGIN
     End_station_id IN 
         (SELECT id FROM dbms.rail_stations where District LIKE CONCAT(to_input, '%'))
     and DATE(Start_time) = inp_date;
+    
 END $$
-
 DELIMITER ;
+
 
 
 DELIMITER ;
@@ -167,6 +169,7 @@ END $$
 
 DELIMITER ;
 
+
 DELIMITER $$
 CREATE PROCEDURE Revenue_over_time(IN from_date DATE,IN to_date DATE)
 BEGIN
@@ -174,7 +177,6 @@ BEGIN
 	SELECT from_date as From_Date, to_date as To_Date,  IFNULL(SUM(Transaction_Amount),0) as Total_Revenue FROM rail_transactions where Booking_date BETWEEN from_date AND DATE_ADD(to_date,INTERVAL 1 DAY) and Payment_Status = 'ok';
 
 END $$
-
 DELIMITER ;
 
 

@@ -8,35 +8,25 @@ from .query import *
 
 # Create your views here.
 
-def test(request):
-    query = "call xnxx;"
-    with connection.cursor() as cursor:
-        cursor.execute(query)
-        data = cursor.fetchall()
-        print(data)
-        data = cursor.fetchall()
-        print(data)
-
-    return render(request, "index.html")
 
 
 def index(request):
-
     all_trains = None
     error = ""
 
     if request.method == "POST":
         form = from_to_Form(request.POST)
         if form.is_valid():
+
             from_des = form.cleaned_data['From']
             to_des = form.cleaned_data['To']
             date = form.cleaned_data['Date']
             category = form.cleaned_data['Category']
 
             all_trains = get_trains(from_des,to_des,date,category)
+
         else:
             error = "enter right stations"
-            
     else:
         form = from_to_Form()
 
@@ -45,6 +35,7 @@ def index(request):
 
 def Booking(request,route_id=0,S_class="SL",category='NA'):
     print(route_id,S_class)
+
     if route_not_exit(route_id) or seats_not_exist(route_id,S_class):
         return render(request, "index.html")
     
@@ -65,11 +56,9 @@ def Payment(request,route_id=0,S_class="SL",category="NA"):
         if form.is_valid():
             print(form)
             print("form valid")
-
         else:
             print("invalid")
             error = "form invalid"
-            
     else:
         form = user_Form()
 
@@ -121,7 +110,6 @@ def Cancel_booking(request):
                 error = "cancellation not successful"
         else:
             error = "enter right PNR"
-            
     else:
         form = cancelation_form()
 
