@@ -91,31 +91,29 @@ DELIMITER ;
 
 
 DELIMITER $$
-CREATE PROCEDURE cancellation(IN pnr_in INT)
+
+CREATE PROCEDURE cancellation(IN in_booking_id INT)
 BEGIN
 
 DECLARE c_transaction_id INT;
 DECLARE c_route_id INT;
-declare wl_pnr int;
-declare c_seat_no varchar(6);
-IF (SELECT COUNT(*) FROM rail_bookings b WHERE b.PNR = pnr_in and Booking_Status='CNF') = 0 THEN
-        SELECT 'PNR not found' AS Message;
+
+IF (SELECT COUNT(*) FROM Bookings WHERE Booking_id =  in_booking_id) = 0 THEN
+        SELECT 'Booking not found' AS Message;
 ELSE
-	SELECT Route_id , Transaction_id,Seat_no INTO c_route_id,c_transaction_id,c_seat_no FROM rail_bookings WHERE PNR = pnr_in;
-    UPDATE rail_bookings SET Booking_Status='CNL' WHERE PNR = pnr_in;
-    UPDATE rail_transactions SET Payment_Status='RFN' WHERE Transaction_id = c_transaction_id;
-	
-    if exists(SELECT PNR FROM rail_bookings WHERE Route_id=c_route_id and Booking_Status = 'WL') then
-		SELECT PNR into wl_pnr FROM rail_bookings WHERE Route_id=c_route_id and Booking_Status = 'WL' limit 1;
-		UPDATE rail_bookings SET Booking_Status = 'CNF',Seat_no = c_seat_no WHERE PNR = wl_pnr;
-	else 
-		update rail_seats set Available=1 where Seat_id = c_seat_no;
-	end if;
-    
-    SELECT 'done' AS Message;
+
+SELECT Route_id, Transaction_id INTO c_route_id, c_transaction_id FROM rail_bookings WHERE Booking_id =  in_booking_id;
+
+UPDATE rail_bookings SET Booking_Status=’CNL’ WHERE Booking_id =  in_booking_id;
+
+UPDATE rail_transactions SET Payment_Status=’RFN’ WHERE Transaction_id = c_transaction_id;
+
+UPDATE rail_bookings SET Booking_Status = ‘CNF’ WHERE PNR = ( SELECT PNR FROM rail_bookings WHERE Route_id=c_route_id and Booking_Status LIKE ‘WTL’ LIMIT 1);
+
 END IF;
 END$$
 DELIMITER ;
+
 
 
 DELIMITER $$
